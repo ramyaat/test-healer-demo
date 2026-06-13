@@ -14,7 +14,7 @@ test.describe("Create post", () => {
     await page.getByTestId("post-title-input").fill("My Test Post");
     await page.getByTestId("post-body-input").fill("This is the post body.");
 
-    await page.getByRole("button", { name: "Create Post" }).click();
+    await page.getByRole("button", { name: "Submit Post" }).click();
 
     await expect(page).toHaveURL(/\/posts\/\d+/);
     await expect(page.getByTestId("post-title")).toHaveText("My Test Post");

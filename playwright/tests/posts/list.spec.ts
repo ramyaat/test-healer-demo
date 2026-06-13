@@ -14,7 +14,7 @@ test.describe("Posts list page", () => {
   });
 
   test("has a link to create a new post", async ({ page }) => {
-    await expect(page.getByTestId("new-post-link")).toBeVisible();
-    await expect(page.getByTestId("new-post-link")).toHaveText("+ New Post");
+    await expect(page.getByRole("link", { name: "+ New Post" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "+ New Post" })).toHaveText("+ New Post");
   });
 });
