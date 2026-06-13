@@ -1,6 +1,6 @@
 # Playwright Tests
 
-End-to-end tests for the demo Rails blog. These tests are **intentionally broken** to demonstrate the Playwright Test Healer.
+End-to-end tests for the demo Rails blog.
 
 ## Setup
 
@@ -12,7 +12,7 @@ npx playwright install chromium
 ## Running tests
 
 ```bash
-# Run all tests (expect 3 failures)
+# Run all tests
 npx playwright test
 
 # Run a specific file
@@ -29,23 +29,21 @@ The Rails server must be running on `http://localhost:3000` before running tests
 
 ## Test files
 
-| File | Tests | Known failing test |
-|------|-------|--------------------|
-| `tests/posts/list.spec.ts` | Posts index page | "shows the posts list container" — wrong testid |
-| `tests/posts/create.spec.ts` | Creating a new post | "creates a post successfully" — wrong button name |
-| `tests/posts/show.spec.ts` | Viewing a single post | "displays published status correctly" — wrong expected text |
+| File | Tests |
+|------|-------|
+| `tests/posts/list.spec.ts` | Posts index page |
+| `tests/posts/create.spec.ts` | Creating a new post |
+| `tests/posts/show.spec.ts` | Viewing a single post |
 
 ## Fixing tests with the healer
 
-The Playwright Test Healer (in `.buildkite/run-playwright-test-healer.sh`) uses a Claude Code agent to inspect the live UI and fix broken selectors/assertions automatically.
+The Playwright Test Healer uses a Claude Code agent to inspect the live UI and fix broken selectors/assertions automatically.
 
-For local development, you can manually trigger the agent skill:
+Trigger the healer skill from the repo root:
 
 ```
 /test-healer playwright/tests/posts/list.spec.ts
 ```
-
-Or fix the bugs yourself — each bug has a comment explaining what's wrong.
 
 ## Configuration
 
