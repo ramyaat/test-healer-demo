@@ -13,6 +13,8 @@ jobs:
     name: Playwright Healer
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    permissions:
+      contents: write
 
     env:
       TEST_FILE: ${{ github.event.inputs.test_file }}
