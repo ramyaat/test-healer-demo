@@ -40,7 +40,7 @@ jobs:
 
       - name: Upload agent output
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: claude-agent-output
           path: log/claude-agent-output*.html
