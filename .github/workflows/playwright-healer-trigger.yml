@@ -1,0 +1,149 @@
+name: Playwright Test Healer Trigger
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  pull-requests: write
+  contents: read
+  actions: write
+
+jobs:
+  trigger-healer:
+    # Only run on PR comments starting with /fix-playwright-test
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/fix-playwright-test')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check user permissions
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: collaborator } = await github.rest.repos.getCollaboratorPermissionLevel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              username: context.payload.comment.user.login
+            });
+
+            if (!['admin', 'write'].includes(collaborator.permission)) {
+              core.setFailed('❌ Only collaborators with write access can trigger the healer');
+            }
+
+      - name: Parse test file path from comment
+        id: parse_input
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const comment = context.payload.comment.body.trim();
+            const parts = comment.split(/\s+/);
+
+            if (parts.length < 2) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `❌ **Invalid usage of Playwright Test Healer**
+
+            You need to provide the test file path.
+
+            **Usage:**
+            \`\`\`
+            /fix-playwright-test <test_file_path>
+            \`\`\`
+
+            **Example:**
+            \`\`\`
+            /fix-playwright-test tests/posts/create.spec.ts
+            \`\`\`
+
+            **Tip:** You can copy the test file path from the failed test in your CI build.`
+              });
+              core.setFailed('❌ Test file path is required');
+              return;
+            }
+
+            const testFilePath = parts.slice(1).join(' ').trim();
+            console.log(`Test file to fix: ${testFilePath}`);
+            core.setOutput('test_file', testFilePath);
+
+      - name: Get PR details
+        id: pr
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+
+            core.setOutput('branch', pr.head.ref);
+            core.setOutput('sha', pr.head.sha);
+
+            console.log(`PR Branch: ${pr.head.ref}`);
+            console.log(`PR SHA: ${pr.head.sha}`);
+
+      - name: Trigger Playwright Healer workflow
+        id: trigger
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const testFile = '${{ steps.parse_input.outputs.test_file }}';
+            const prBranch = '${{ steps.pr.outputs.branch }}';
+
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'playwright-healer.yml',
+              ref: prBranch,
+              inputs: {
+                test_file: testFile
+              }
+            });
+
+            console.log(`✅ Triggered playwright-healer.yml on branch: ${prBranch}`);
+
+      - name: Post status comment to PR
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const testFile = '${{ steps.parse_input.outputs.test_file }}';
+            const prBranch = '${{ steps.pr.outputs.branch }}';
+            const actionsUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/workflows/playwright-healer.yml`;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `🤖 **Playwright Test Healer Triggered**
+
+            **Test File:** \`${testFile}\`
+            **Branch:** \`${prBranch}\`
+            **Triggered by:** @${{ github.event.comment.user.login }}
+
+            [View healer run →](${actionsUrl})
+
+            The healer will analyze the failure, fix the test, and push a commit to this PR.`
+            });
+
+      - name: Post failure comment to PR
+        if: failure() && steps.parse_input.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `❌ **Failed to trigger Playwright Test Healer**
+
+            An error occurred while triggering the healer. Please check the [workflow logs](https://github.com/${{ github.repository }}/actions).`
+            });

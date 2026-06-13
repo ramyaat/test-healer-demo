@@ -3,7 +3,6 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
 
 jobs:
   scan_ruby:
@@ -64,4 +63,50 @@ jobs:
 
       - name: Lint code for consistent style
         run: bin/rubocop -f github
+
+  playwright:
+    name: Playwright Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright dependencies
+        working-directory: playwright
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Set up database
+        env:
+          RAILS_ENV: test
+        run: |
+          bin/rails db:create
+          bin/rails db:schema:load
+          bin/rails db:seed
+
+      - name: Run Playwright tests
+        run: npx playwright test --project=default
+        working-directory: playwright
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright/playwright-report/
+          if-no-files-found: ignore
 

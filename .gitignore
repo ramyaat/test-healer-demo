@@ -23,6 +23,8 @@
 /public/packs-test
 .byebug_history
 .kamal/
+log/*
+log/development.log
 
 # Environment
 .env

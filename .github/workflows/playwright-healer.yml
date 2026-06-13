@@ -1,0 +1,47 @@
+name: Playwright Test Healer
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_file:
+        description: "Test file(s) to heal (comma-separated, e.g. tests/posts/create.spec.ts)"
+        required: true
+        type: string
+
+jobs:
+  playwright-healer:
+    name: Playwright Healer
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    env:
+      TEST_FILE: ${{ github.event.inputs.test_file }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PROMPT_FILE: .agents/skills/test-healer/SKILL.md
+      MAX_ITERATIONS: "50"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run Playwright Test Healer
+        run: .github/scripts/run-playwright-test-healer.sh
+
+      - name: Upload agent output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude-agent-output
+          path: log/claude-agent-output*.html
+          if-no-files-found: ignore
