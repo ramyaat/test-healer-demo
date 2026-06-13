@@ -23,7 +23,7 @@ test.describe("Show post", () => {
   });
 
   test("displays published status correctly", async ({ page }) => {
-    await expect(page.getByTestId("publication-status")).toHaveText("Published");
+    await expect(page.getByTestId("post-status")).toHaveText("Published");
   });
 
   test("has edit and back links", async ({ page }) => {
