@@ -180,7 +180,7 @@ export async function runAgent(config: Config): Promise<void> {
         options: {
           cwd: config.WORKSPACE_ROOT,
           mcpServers: config.MCP_SERVERS,
-          model: "claude-sonnet-4-6",
+          model: "claude-sonnet-4-5",
           maxTurns: config.MAX_ITERATIONS,
           permissionMode: "bypassPermissions",
           disallowedTools: ["Bash", "BashOutput", "KillBash"],
