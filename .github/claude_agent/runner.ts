@@ -157,9 +157,6 @@ export async function runAgent(config: Config): Promise<void> {
       /* webpackChunkName: "claude_agent_sdk" */ "@anthropic-ai/claude-agent-sdk"
     );
 
-    process.env.ANTHROPIC_API_KEY = config.ANTHROPIC_API_KEY;
-    process.env.BUILDKITE_ANTHROPIC_API_KEY = config.ANTHROPIC_API_KEY;
-
     const originalNodeEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = "development";
 
