@@ -149,7 +149,7 @@ if [ -n "${GITHUB_TOKEN:-}" ]; then
       cat tmp/.healer-modified-files.txt
 
       BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME:-main}}"
-      git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+      git config --global url."https://x-access-token:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
 
       mapfile -t FILES_TO_STAGE < tmp/.healer-modified-files.txt
       git add "${FILES_TO_STAGE[@]}"

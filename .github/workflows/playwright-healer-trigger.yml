@@ -89,12 +89,15 @@ jobs:
 
       - name: Trigger Playwright Healer workflow
         id: trigger
+        env:
+          TEST_FILE: ${{ steps.parse_input.outputs.test_file }}
+          PR_BRANCH: ${{ steps.pr.outputs.branch }}
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const testFile = '${{ steps.parse_input.outputs.test_file }}';
-            const prBranch = '${{ steps.pr.outputs.branch }}';
+            const testFile = process.env.TEST_FILE;
+            const prBranch = process.env.PR_BRANCH;
 
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
@@ -110,12 +113,15 @@ jobs:
 
       - name: Post status comment to PR
         if: success()
+        env:
+          TEST_FILE: ${{ steps.parse_input.outputs.test_file }}
+          PR_BRANCH: ${{ steps.pr.outputs.branch }}
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const testFile = '${{ steps.parse_input.outputs.test_file }}';
-            const prBranch = '${{ steps.pr.outputs.branch }}';
+            const testFile = process.env.TEST_FILE;
+            const prBranch = process.env.PR_BRANCH;
             const actionsUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/workflows/playwright-healer.yml`;
 
             await github.rest.issues.createComment({
