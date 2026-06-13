@@ -1,0 +1,89 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link "Demo Blog" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "All Posts" [ref=e6] [cursor=pointer]:
+          - /url: /posts
+        - link "+ New Post" [ref=e7] [cursor=pointer]:
+          - /url: /posts/new
+  - main [ref=e8]:
+    - heading "Posts" [level=1] [ref=e10]
+    - generic [ref=e11]:
+      - generic [ref=e13]:
+        - generic [ref=e14]: Hello World
+        - generic [ref=e16]: Published
+        - generic [ref=e17]: Welcome to the demo blog!ww
+        - link "Read more →" [ref=e19] [cursor=pointer]:
+          - /url: /posts/1
+      - generic [ref=e21]:
+        - generic [ref=e22]: Getting Started with Rails
+        - generic [ref=e24]: Published
+        - generic [ref=e25]: Rails makes web development fun and productive.
+        - link "Read more →" [ref=e27] [cursor=pointer]:
+          - /url: /posts/2
+      - generic [ref=e29]:
+        - generic [ref=e30]: Draft Post
+        - generic [ref=e32]: Draft
+        - generic [ref=e33]: This post is not yet published.
+        - link "Read more →" [ref=e35] [cursor=pointer]:
+          - /url: /posts/3
+      - generic [ref=e37]:
+        - generic [ref=e39]: Draft
+        - link "Read more →" [ref=e42] [cursor=pointer]:
+          - /url: /posts/4
+      - generic [ref=e44]:
+        - generic [ref=e45]: Show Test Post
+        - generic [ref=e47]: Published
+        - generic [ref=e48]: Body for show test.
+        - link "Read more →" [ref=e50] [cursor=pointer]:
+          - /url: /posts/5
+      - generic [ref=e52]:
+        - generic [ref=e53]: Show Test Post
+        - generic [ref=e55]: Published
+        - generic [ref=e56]: Body for show test.
+        - link "Read more →" [ref=e58] [cursor=pointer]:
+          - /url: /posts/6
+      - generic [ref=e60]:
+        - generic [ref=e61]: Show Test Post
+        - generic [ref=e63]: Published
+        - generic [ref=e64]: Body for show test.
+        - link "Read more →" [ref=e66] [cursor=pointer]:
+          - /url: /posts/7
+      - generic [ref=e68]:
+        - generic [ref=e69]: Show Test Post
+        - generic [ref=e71]: Published
+        - generic [ref=e72]: Body for show test.
+        - link "Read more →" [ref=e74] [cursor=pointer]:
+          - /url: /posts/8
+      - generic [ref=e76]:
+        - generic [ref=e77]: Show Test Post
+        - generic [ref=e79]: Published
+        - generic [ref=e80]: Body for show test.
+        - link "Read more →" [ref=e82] [cursor=pointer]:
+          - /url: /posts/9
+      - generic [ref=e84]:
+        - generic [ref=e85]: Show Test Post
+        - generic [ref=e87]: Published
+        - generic [ref=e88]: Body for show test.
+        - link "Read more →" [ref=e90] [cursor=pointer]:
+          - /url: /posts/10
+      - generic [ref=e92]:
+        - generic [ref=e93]: Show Test Post
+        - generic [ref=e95]: Published
+        - generic [ref=e96]: Body for show test.
+        - link "Read more →" [ref=e98] [cursor=pointer]:
+          - /url: /posts/11
+      - generic [ref=e100]:
+        - generic [ref=e101]: Show Test Post
+        - generic [ref=e103]: Published
+        - generic [ref=e104]: Body for show test.
+        - link "Read more →" [ref=e106] [cursor=pointer]:
+          - /url: /posts/12
+      - generic [ref=e108]:
+        - generic [ref=e109]: Show Test Post
+        - generic [ref=e111]: Published
+        - generic [ref=e112]: Body for show test.
+        - link "Read more →" [ref=e114] [cursor=pointer]:
+          - /url: /posts/13

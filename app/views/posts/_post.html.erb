@@ -1,0 +1,19 @@
+<div id="<%= dom_id post %>" data-testid="post" class="card">
+  <div class="card__title">
+    <span data-testid="post-title"><%= post.title %></span>
+  </div>
+
+  <div class="card__meta">
+    <span class="badge <%= post.published? ? 'badge--published' : 'badge--draft' %>" data-testid="post-status">
+      <%= post.published? ? "Published" : "Draft" %>
+    </span>
+  </div>
+
+  <div class="card__body">
+    <span data-testid="post-body"><%= truncate(post.body, length: 160) %></span>
+  </div>
+
+  <div class="card__footer">
+    <%= link_to "Read more →", post, class: "btn btn--secondary", data: { testid: "show-post-#{post.id}" } %>
+  </div>
+</div>
