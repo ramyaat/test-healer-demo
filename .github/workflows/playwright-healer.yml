@@ -13,6 +13,8 @@ jobs:
     name: Playwright Healer
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    permissions:
+      contents: write
 
     env:
       TEST_FILE: ${{ github.event.inputs.test_file }}
@@ -34,6 +36,35 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
+      - name: Install Playwright dependencies
+        working-directory: playwright
+        run: npm ci
+
+      - name: Install playwright-cli globally
+        run: npm install -g @playwright/cli
+
+      - name: Install Playwright browsers
+        working-directory: playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Set up database
+        env:
+          RAILS_ENV: test
+        run: |
+          bin/rails db:create
+          bin/rails db:schema:load
+          bin/rails db:seed
+
+      - name: Start Rails server
+        env:
+          RAILS_ENV: test
+        run: |
+          bin/rails server -p 3000 -d
+          for i in $(seq 1 30); do
+            curl -s http://localhost:3000/ > /dev/null 2>&1 && echo "Rails server ready" && break
+            sleep 1
+          done
 
       - name: Run Playwright Test Healer
         run: .github/scripts/run-playwright-test-healer.sh
