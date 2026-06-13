@@ -99,7 +99,7 @@ jobs:
           bin/rails db:seed
 
       - name: Run Playwright tests
-        run: npx playwright test --project=default
+        run: npx playwright test --project=chromium
         working-directory: playwright
 
       - name: Upload test results
