@@ -152,7 +152,17 @@ if [ -n "${GITHUB_TOKEN:-}" ]; then
       git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
       mapfile -t FILES_TO_STAGE < tmp/.healer-modified-files.txt
-      git add "${FILES_TO_STAGE[@]}"
+      # Filter out gitignored paths (e.g. playwright/test-results/) to avoid
+      # git add failing with exit code 1 under set -e
+      STAGEABLE=()
+      for f in "${FILES_TO_STAGE[@]}"; do
+        git check-ignore -q "$f" || STAGEABLE+=("$f")
+      done
+      if [ ${#STAGEABLE[@]} -eq 0 ]; then
+        echo "No stageable files after filtering ignored paths - skipping commit"
+        exit 0
+      fi
+      git add "${STAGEABLE[@]}"
       git commit -m "fix: auto-heal failing Playwright tests
 
 Fixed by Playwright Healer Bot via Claude Agent.
