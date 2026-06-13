@@ -20,7 +20,7 @@ Instead of running the entire Playwright test suite (~60 minutes), this tool use
 export ANTHROPIC_API_KEY="sk-ant-..."
 export GITHUB_TOKEN="ghp_..."
 export BUILDKITE_PULL_REQUEST=1234
-export REPO_LOCATION="circleco/circle"
+export REPO_LOCATION="your-org/your-repo"
 
 # Run test picker
 .buildkite/test-picker/playwright-test-picker.sh
@@ -40,7 +40,7 @@ npx playwright test [tests-from-analysis]
 - `ANTHROPIC_API_KEY` - Anthropic API key
 - `BUILDKITE_PULL_REQUEST` - PR number to analyze
 - `GITHUB_TOKEN` - GitHub API token for fetching PR changes
-- `REPO_LOCATION` - Repository (e.g., `circleco/circle`) or `BUILDKITE_REPO`
+- `REPO_LOCATION` - Repository (e.g., `your-org/your-repo`) or `BUILDKITE_REPO`
 
 ### Optional
 
@@ -174,7 +174,7 @@ export ANTHROPIC_API_KEY="sk-ant-..."
 # Analyze specific PR
 export BUILDKITE_PULL_REQUEST="1234"
 export GITHUB_TOKEN="ghp_..."
-export REPO_LOCATION="circleco/circle"
+export REPO_LOCATION="your-org/your-repo"
 .buildkite/test-picker/playwright-test-picker.sh
 ```
 
@@ -300,7 +300,7 @@ npm install && npm run build
 **PR changes not fetched:**
 
 - Check `GITHUB_TOKEN` is set
-- Verify `REPO_LOCATION` is correct (e.g., `circleco/circle`)
+- Verify `REPO_LOCATION` is correct (e.g., `your-org/your-repo`)
 - Verify `BUILDKITE_PULL_REQUEST` is a valid PR number
 - Check GitHub token has `repo` scope permissions
 

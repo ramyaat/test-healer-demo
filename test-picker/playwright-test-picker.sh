@@ -60,7 +60,7 @@ fi
 # Check repository location is provided
 if [ -z "${REPO_LOCATION:-}" ] && [ -z "${BUILDKITE_REPO:-}" ]; then
   echo -e "${RED}❌ Error: REPO_LOCATION or BUILDKITE_REPO is required${NC}"
-  echo -e "${YELLOW}   Set repo: export REPO_LOCATION='circleco/circle'${NC}"
+  echo -e "${YELLOW}   Set repo: export REPO_LOCATION='your-org/your-repo'${NC}"
   exit 1
 fi
 
