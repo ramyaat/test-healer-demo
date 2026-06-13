@@ -183,7 +183,6 @@ export async function runAgent(config: Config): Promise<void> {
           model: "claude-sonnet-4-5",
           maxTurns: config.MAX_ITERATIONS,
           permissionMode: "bypassPermissions",
-          disallowedTools: ["Bash", "BashOutput", "KillBash"],
           pathToClaudeCodeExecutable: pathToClaudeCode,
           stderr: (data: string) => {
             if (data.trim()) {
