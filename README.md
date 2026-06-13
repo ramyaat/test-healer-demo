@@ -7,8 +7,8 @@ A minimal Rails blog app used to demonstrate the **Playwright Test Healer** — 
 | Directory | Purpose |
 |-----------|---------|
 | `app/` | Rails MVC — Posts resource (title, body, published) |
-| `playwright/` | Playwright test suite with **intentionally broken tests** |
-| `.buildkite/run-playwright-test-healer.sh` | The healer script (sourced from `circle` repo) |
+| `playwright/` | Playwright test suite |
+| `.buildkite/run-playwright-test-healer.sh` | The healer script that runs the Claude agent |
 
 ## Quick start
 
@@ -22,21 +22,11 @@ rails db:setup
 # Start the Rails server
 rails server
 
-# In another terminal — run the broken tests
+# In another terminal — run the tests
 cd playwright
 npm install
 npx playwright test
 ```
-
-You'll see **3 failing tests**, each with a different kind of bug the healer knows how to fix.
-
-## The bugs (for the demo)
-
-| File | Bug | Fix |
-|------|-----|-----|
-| `playwright/tests/posts/list.spec.ts` | Wrong `data-testid`: `"post-list"` instead of `"posts-list"` | Update the selector |
-| `playwright/tests/posts/create.spec.ts` | Wrong button name: `"Save post"` instead of `"Create Post"` | Update the role query |
-| `playwright/tests/posts/show.spec.ts` | Wrong assertion: `"Published: true"` instead of `"Published"` | Update the expected text |
 
 ## Running the Test Healer
 

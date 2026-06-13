@@ -35,11 +35,11 @@ function normalizeServerPath(
   serverName: string,
   pathType: string,
 ): string {
-  if (!pathValue.startsWith("/data/circle/current/")) {
+  if (!pathValue.startsWith("/data/workspace/current/")) {
     return pathValue;
   }
 
-  const relativePath = pathValue.replace(/^\/data\/circle\/current\//, "");
+  const relativePath = pathValue.replace(/^\/data\/workspace\/current\//, "");
   const resolved = path.resolve(workspaceRoot, relativePath);
 
   if (!resolved.startsWith(workspaceRoot)) {
