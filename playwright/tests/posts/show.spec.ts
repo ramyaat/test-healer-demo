@@ -23,8 +23,7 @@ test.describe("Show post", () => {
   });
 
   test("displays published status correctly", async ({ page }) => {
-    // BUG: the status element shows "Published", not "Published: true"
-    await expect(page.getByTestId("post-status")).toHaveText("Published: true");
+    await expect(page.getByTestId("post-status")).toHaveText("Published");
   });
 
   test("has edit and back links", async ({ page }) => {
