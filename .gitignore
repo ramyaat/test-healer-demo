@@ -1,0 +1,63 @@
+# Ruby / Rails
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+
+# Rails specific
+/log/*
+!/log/.keep
+/tmp/*
+!/tmp/.keep
+/storage/*
+!/storage/.keep
+/public/assets
+/public/packs
+/public/packs-test
+.byebug_history
+.kamal/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Bundler
+/.bundle/
+/vendor/bundle/
+
+# Database
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/*.sqlite3-shm
+/db/*.sqlite3-wal
+
+# Node / Playwright
+node_modules/
+playwright/node_modules/
+playwright-report/
+test-results/
+playwright/.playwright-cli/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Credentials
+config/credentials/*.key
+config/master.key

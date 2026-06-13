@@ -1,0 +1,21 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link "Demo Blog" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]:
+        - link "All Posts" [ref=e6] [cursor=pointer]:
+          - /url: /posts
+        - link "+ New Post" [ref=e7] [cursor=pointer]:
+          - /url: /posts/new
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - heading "Hello World" [level=1] [ref=e10]
+      - generic [ref=e11]: Published
+    - generic [ref=e13]: Welcome to the demo blog!ww
+    - generic [ref=e14]:
+      - link "Edit" [ref=e15] [cursor=pointer]:
+        - /url: /posts/1/edit
+      - link "← All Posts" [ref=e16] [cursor=pointer]:
+        - /url: /posts
+      - button "Delete" [ref=e18] [cursor=pointer]

@@ -1,0 +1,32 @@
+<%= form_with(model: post, class: "form-card", data: { testid: "post-form" }) do |form| %>
+  <% if post.errors.any? %>
+    <div class="form-errors" data-testid="form-errors">
+      <h2><%= pluralize(post.errors.count, "error") %> prevented this post from being saved:</h2>
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, placeholder: "Post title", data: { testid: "post-title-input" } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.textarea :body, placeholder: "Write your post...", data: { testid: "post-body-input" } %>
+  </div>
+
+  <div class="field field--checkbox">
+    <%= form.checkbox :published, data: { testid: "post-published-checkbox" } %>
+    <%= form.label :published, "Publish this post" %>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit class: "btn btn--primary", data: { testid: "post-submit-button" } %>
+    <%= link_to "Cancel", posts_path, class: "btn btn--secondary" %>
+  </div>
+<% end %>

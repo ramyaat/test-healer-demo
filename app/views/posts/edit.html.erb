@@ -1,0 +1,8 @@
+<% content_for :title, "Editing: #{@post.title}" %>
+
+<div class="page-header">
+  <h1>Edit Post</h1>
+  <%= link_to "← Back", @post, class: "btn btn--secondary" %>
+</div>
+
+<%= render "form", post: @post %>

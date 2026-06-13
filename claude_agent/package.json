@@ -1,0 +1,22 @@
+{
+  "name": "claude-agent",
+  "version": "1.0.0",
+  "description": "Claude Agent SDK powered assistant for automated tasks",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc && node dist/index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.1.55",
+    "@anthropic-ai/claude-code": "^2.0.55",
+    "@modelcontextprotocol/sdk": "^1.25.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.3"
+  }
+}
+
