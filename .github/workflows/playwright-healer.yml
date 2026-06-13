@@ -39,6 +39,9 @@ jobs:
         working-directory: playwright
         run: npm ci
 
+      - name: Install playwright-cli globally
+        run: npm install -g @playwright/cli
+
       - name: Install Playwright browsers
         working-directory: playwright
         run: npx playwright install --with-deps chromium
